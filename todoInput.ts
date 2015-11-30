@@ -1,5 +1,5 @@
 import { Component, View, Inject, FORM_DIRECTIVES } from 'angular2/angular2';
-import { TodoService } from './todoService.ts';
+import { TodoService, TodoModel } from './todoService.ts';
 
 @Component({
 	selector: 'todo-input'
@@ -9,13 +9,13 @@ import { TodoService } from './todoService.ts';
 	directives: [FORM_DIRECTIVES],
 	template: `
 		<form (ng-submit)="addTodo()">
-			<input type="text" [(ng-model)]="todoModel"/>
+			<input type="text" [(ng-model)]="todoModel.title"/>
 		</form>
 	`
 })
 
 export class TodoInput {
-	todoModel;
+	todoModel:TodoModel = new TodoModel();
 	todoService;
 	constructor(
 		@Inject(TodoService) todoService
@@ -27,6 +27,7 @@ export class TodoInput {
 
 	addTodo() {
 		this.todoService.addTodo(this.todoModel);
+		this.todoModel = new TodoModel();
 	}
 
 }
