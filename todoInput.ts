@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/angular2';
+import { Component, View, Inject, FORM_DIRECTIVES } from 'angular2/angular2';
 import { TodoService } from './todoService.ts';
 
 @Component({
@@ -6,13 +6,16 @@ import { TodoService } from './todoService.ts';
 })
 
 @View({
+	directives: [FORM_DIRECTIVES],
 	template: `
-		<input type="text" #log-me/>
-		<button (click)="onClick(logMe.value)">Log input</button>
+		<form (ng-submit)="addTodo()">
+			<input type="text" [(ng-model)]="todoModel"/>
+		</form>
 	`
 })
 
 export class TodoInput {
+	todoModel;
 	todoService;
 	constructor(
 		@Inject(TodoService) todoService
@@ -22,8 +25,8 @@ export class TodoInput {
 
 	}
 
-	onClick (value) {
-		this.todoService.addTodo(value);
-		console.log(this.todoService.todos);
+	addTodo() {
+		this.todoService.addTodo(this.todoModel);
 	}
+
 }
