@@ -6,6 +6,14 @@ export class TodoModel {
 	) {
 
 	}
+
+	toggle():void {
+		if(this.status == 'started') {
+			this.status = 'completed';
+		} else {
+			this.status = 'started';
+		}
+	}
 }
 
 export class TodoService {
